@@ -11,8 +11,7 @@ def show_index_page(request):
     features =[]
     for place in places:
         details_url = reverse('places:place_detail_api', args=[place.id])
-        # file_name = f'{place.id}.json'
-        # details_url = f"/static/places/{file_name}"
+
         features.append({
             'type': 'Feature',
             'geometry': {
