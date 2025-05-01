@@ -36,6 +36,7 @@ class PlaceImage(models.Model):
         verbose_name='Место'
     )
     image = models.ImageField(
+        'Картинка',
         upload_to='place_images/'
     )
     position=models.PositiveIntegerField(
