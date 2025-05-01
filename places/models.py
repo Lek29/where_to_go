@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.html import format_html
+
 
 class Places(models.Model):
     title = models.CharField(
@@ -50,5 +52,22 @@ class PlaceImage(models.Model):
         verbose_name = 'Изображение места'
         verbose_name_plural = 'Изображения места'
 
+
     def __str__(self):
-        return f'{self.position} {self.place.title}'
+        try:
+            return f'{self.position} {self.place.title}'
+        except (Places.DoesNotExist, AttributeError):
+            return f"{self.position} (Место не указано или еще не сохранено)"
+
+
+    def get_preview_html(self):
+        if self.image and hasattr(self.image, 'url'):
+            return format_html(
+                '<img src="{url}" style="max-height: 200px; width: auto;" />',
+                url=self.image.url
+            )
+        return "Нет изображения или объект не сохранен"
+
+
+    get_preview_html.short_description = 'Предпросмотр'
+

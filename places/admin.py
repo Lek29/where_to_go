@@ -4,7 +4,8 @@ from .models import  Places, PlaceImage
 
 class PlaceImageInlin(admin.TabularInline):
     model = PlaceImage
-    fields = ('image', 'position')
+    fields = ('image', 'get_preview_html', 'position')
+    readonly_fields = ('get_preview_html',)
     extra = 1
 
 
