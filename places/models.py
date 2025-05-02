@@ -36,6 +36,7 @@ class Places(models.Model):
     def __str__(self):
         return self.title
 
+
     def save(self, *args, **kwargs):
         if not self.place_id_slug:
             latin_title = translit.translify(self.title)
