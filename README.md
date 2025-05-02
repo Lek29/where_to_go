@@ -14,7 +14,7 @@
 *   Vue.js 
 *   Bootstrap 
 *   django-tinymce 
-*   django-adminsortable2 
+*   django-admin-sortable2 
 *   python-dotenv 
 *   Pillow 
 *   SQLite 
