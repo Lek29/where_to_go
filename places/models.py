@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.html import format_html
+from django.utils.text import slugify
+from pytils import translit
 from tinymce.models import HTMLField
 
 
@@ -7,6 +9,13 @@ class Places(models.Model):
     title = models.CharField(
         'Название',
         max_length=200
+    )
+    place_id_slug = models.SlugField(
+        "Идентификатор для URL (слаг)",
+        max_length=100,
+        unique=True,
+        blank=True,
+        db_index=True
     )
     description_short = models.TextField(
         'Краткое описание',
@@ -23,8 +32,16 @@ class Places(models.Model):
         'Широта'
     )
 
+
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.place_id_slug:
+            latin_title = translit.translify(self.title)
+            self.place_id_slug = slugify(latin_title)
+        super().save(*args, **kwargs)
+
 
     class Meta:
         ordering = ['title']
