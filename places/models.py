@@ -42,6 +42,7 @@ class Places(models.Model):
             title_processed = self.title
             title_processed = title_processed.replace('«', '"').replace('»', '"')
             title_processed = title_processed.replace('„', '"').replace('“', '"')
+            title_processed = title_processed.replace('°', '')
             title_processed = title_processed.replace('\u00A0', ' ')
             latin_title = translit.translify(title_processed)
             self.place_id_slug = slugify(latin_title)
