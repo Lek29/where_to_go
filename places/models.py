@@ -39,8 +39,13 @@ class Places(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.place_id_slug:
-            latin_title = translit.translify(self.title)
+            title_processed = self.title
+            title_processed = title_processed.replace('«', '"').replace('»', '"')
+            title_processed = title_processed.replace('„', '"').replace('“', '"')
+            title_processed = title_processed.replace('\u00A0', ' ')
+            latin_title = translit.translify(title_processed)
             self.place_id_slug = slugify(latin_title)
+
         super().save(*args, **kwargs)
 
 
