@@ -180,3 +180,4 @@ cython_debug/
 .gitignore
 /staticfiles/
 .idea/
+/where-to-go-frontend/
