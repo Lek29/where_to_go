@@ -23,14 +23,22 @@ class Command(BaseCommand):
         except Exception as e:
             print(f"Ошибка при загрузке JSON: {e}")
             return
+        try:
+            place_title_from_json = place_data['title']
+            coordinates = place_data['coordinates']
+            longitude_from_json = coordinates['lng']
+            latitude_fron_json = coordinates['lat']
+        except KeyError as e:
+            print(f"Ошибка: отсутствует обязательный ключ {e} в JSON по адресу {json_url}")
+            return
 
         place_object, created = Places.objects.get_or_create(
-            title=place_data['title'],
+            title=place_title_from_json,
+            longitude = longitude_from_json,
+            latitude = latitude_fron_json,
             defaults={
                 'description_short': place_data.get('description_short', ''),
                 'description_long': place_data.get('description_long', ''),
-                'longitude': place_data['coordinates']['lng'],
-                'latitude': place_data['coordinates']['lat'],
             }
         )
 
