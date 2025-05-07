@@ -68,7 +68,7 @@ class PlaceImage(models.Model):
     def get_preview_html(self):
         if self.image and hasattr(self.image, 'url'):
             return format_html(
-                '<img src="{url}" style="max-height: 200px; width: auto;" />',
+                '<img src="{url}" style="max-height: 200px; width: 200px;" />',
                 url=self.image.url
             )
         return "Нет изображения или объект не сохранен"
