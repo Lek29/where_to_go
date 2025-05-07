@@ -24,14 +24,15 @@ class Place(models.Model):
     )
 
 
-    def __str__(self):
-        return self.title
-
-
     class Meta:
         ordering = ['title']
         verbose_name = 'Интересное место'
         verbose_name_plural = 'Интересные места'
+
+
+    def __str__(self):
+        return self.title
+
 
 
 class PlaceImage(models.Model):
