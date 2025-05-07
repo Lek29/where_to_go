@@ -1,11 +1,11 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
-from places.models import Places
+from places.models import Place
 from django.urls import reverse
 
 
 def show_index_page(request):
-    places =Places.objects.all()
+    places =Place.objects.all()
 
     features =[]
     for place in places:
@@ -40,13 +40,13 @@ def show_index_page(request):
 
 
 def place_detail_api_view(request, place_id):
-    place = get_object_or_404(Places, pk=place_id)
+    place = get_object_or_404(Place, pk=place_id)
 
     place_details = {
         'title': place.title,
         'imgs': [img.image.url for img in place.images.all()],
-        'description_short': place.description_short,
-        'description_long': place.description_long,
+        'description_short': place.short_description,
+        'description_long': place.long_description,
         'coordinates': {
             'lat': place.latitude,
             'lng': place.longitude

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Places, PlaceImage
+from .models import  Place, PlaceImage
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
 
 
@@ -11,10 +11,10 @@ class PlaceImageInline(SortableInlineAdminMixin,
     extra = 1
 
 
-@admin.register(Places)
+@admin.register(Place)
 class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ('title', 'longitude', 'latitude')
-    search_fields = ['title', 'description_short']
+    search_fields = ['title', 'short_description']
     inlines = [PlaceImageInline]
 
 

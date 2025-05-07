@@ -1,7 +1,7 @@
 import requests
 from django.core.management.base import BaseCommand
 from django.core.files.base import ContentFile
-from places.models import Places, PlaceImage
+from places.models import Place, PlaceImage
 import os
 
 
@@ -27,18 +27,18 @@ class Command(BaseCommand):
             place_title_from_json = place_data['title']
             coordinates = place_data['coordinates']
             longitude_from_json = coordinates['lng']
-            latitude_fron_json = coordinates['lat']
+            latitude_from_json = coordinates['lat']
         except KeyError as e:
             print(f"Ошибка: отсутствует обязательный ключ {e} в JSON по адресу {json_url}")
             return
 
-        place_object, created = Places.objects.get_or_create(
+        place_object, created = Place.objects.get_or_create(
             title=place_title_from_json,
             longitude = longitude_from_json,
-            latitude = latitude_fron_json,
+            latitude = latitude_from_json,
             defaults={
-                'description_short': place_data.get('description_short', ''),
-                'description_long': place_data.get('description_long', ''),
+                'short_description': place_data.get('description_short', ''),
+                'long_description': place_data.get('description_long', ''),
             }
         )
 

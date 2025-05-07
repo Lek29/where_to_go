@@ -3,16 +3,16 @@ from django.utils.html import format_html
 from tinymce.models import HTMLField
 
 
-class Places(models.Model):
+class Place(models.Model):
     title = models.CharField(
         'Название',
         max_length=200
     )
-    description_short = models.TextField(
+    short_description = models.TextField(
         'Краткое описание',
         blank=True
     )
-    description_long = HTMLField(
+    long_description = HTMLField(
         'Полное описание',
         blank=True
     )
@@ -36,7 +36,7 @@ class Places(models.Model):
 
 class PlaceImage(models.Model):
     place = models.ForeignKey(
-        Places,
+        Place,
         on_delete=models.CASCADE,
         related_name='images',
         verbose_name='Место'
@@ -60,7 +60,7 @@ class PlaceImage(models.Model):
     def __str__(self):
         try:
             return f'{self.position} {self.place.title}'
-        except (Places.DoesNotExist, AttributeError):
+        except (Place.DoesNotExist, AttributeError):
             return f"{self.position} (Место не указано или еще не сохранено)"
 
 
