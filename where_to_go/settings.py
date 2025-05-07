@@ -1,22 +1,25 @@
 from pathlib import Path
-from dotenv import load_dotenv
-import os
+from django.conf.global_settings import ALLOWED_HOSTS
+from environs import Env
+from parler_example.settings import SECRET_KEY
 
-load_dotenv()
+env = Env()
+env.read_env()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-if not SECRET_KEY:
-    raise ValueError("Не установлена переменная окружения SECRET_KEY")
 
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+SECRET_KEY = env.str('SECRET_KEY')
 
-allowed_hosts_str = os.getenv('ALLOWED_HOSTS', '')
-ALLOWED_HOSTS = list(filter(None, allowed_hosts_str.split(',')))
+
+DEBUG = env.bool('DEBUG', default=False)
+
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 
 # Application definition
