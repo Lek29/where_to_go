@@ -18,4 +18,12 @@ class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [PlaceImageInline]
 
 
+@admin.register(PlaceImage)
+class PlaceImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'place', 'position', 'get_preview_html')
+    autocomplete_fields = ['place']
+
+
+    readonly_fields = ('get_preview_html',)
+
 
