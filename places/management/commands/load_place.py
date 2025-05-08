@@ -19,13 +19,13 @@ class Command(BaseCommand):
         try:
             response = requests.get(json_url)
             response.raise_for_status()
-            place_data = response.json()
+            raw_place = response.json()
         except Exception as e:
             print(f"Ошибка при загрузке JSON: {e}")
             return
         try:
-            place_title_from_json = place_data['title']
-            coordinates = place_data['coordinates']
+            place_title_from_json = raw_place['title']
+            coordinates = raw_place['coordinates']
             longitude_from_json = coordinates['lng']
             latitude_from_json = coordinates['lat']
         except KeyError as e:
@@ -37,8 +37,8 @@ class Command(BaseCommand):
             longitude = longitude_from_json,
             latitude = latitude_from_json,
             defaults={
-                'short_description': place_data.get('description_short', ''),
-                'long_description': place_data.get('description_long', ''),
+                'short_description': raw_place.get('description_short', ''),
+                'long_description': raw_place.get('description_long', ''),
             }
         )
 
@@ -49,7 +49,7 @@ class Command(BaseCommand):
 
             place_object.images.all().delete()
 
-        image_urls = place_data.get('imgs', [])
+        image_urls = raw_place.get('imgs', [])
         print(f"Найдено картинок: {len(image_urls)}")
 
         for index, img_url in enumerate(image_urls):
