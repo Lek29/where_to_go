@@ -40,7 +40,10 @@ def show_index_page(request):
 
 
 def place_detail_api_view(request, place_id):
-    place = get_object_or_404(Place, pk=place_id)
+    place = get_object_or_404(
+        Place.objects.prefetch_related('images'),
+        pk=place_id
+    )
 
     place_details = {
         'title': place.title,
