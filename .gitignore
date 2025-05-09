@@ -114,3 +114,4 @@ cython_debug/
 /staticfiles/
 .idea/
 /where-to-go-frontend/
+pyproject.toml/
