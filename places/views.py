@@ -22,7 +22,7 @@ def show_index_page(request):
             'properties': {
                 'title': place.title,
                 'placeId': place.id,
-                "detailsUrl": details_url
+                'detailsUrl': details_url
             }
         })
 
