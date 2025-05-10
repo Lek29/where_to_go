@@ -15,7 +15,6 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('json_url', type=str, help='URL JSON-файла')
 
-
     def handle(self, *args, **options):
         json_url = options['json_url']
         print(f"Загружаем: {json_url}")
@@ -38,8 +37,8 @@ class Command(BaseCommand):
 
         place_object, created = Place.objects.get_or_create(
             title=place_title_from_json,
-            longitude = longitude_from_json,
-            latitude = latitude_from_json,
+            longitude=longitude_from_json,
+            latitude=latitude_from_json,
             defaults={
                 'short_description': raw_place.get('description_short', ''),
                 'long_description': raw_place.get('description_long', ''),
@@ -74,4 +73,3 @@ class Command(BaseCommand):
 
             except Exception as e:
                 print(f'Ошибка: {e}')
-

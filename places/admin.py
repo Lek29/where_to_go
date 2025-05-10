@@ -5,8 +5,10 @@ from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from .models import Place, PlaceImage
 
 
-class PlaceImageInline(SortableInlineAdminMixin,
-                      admin.TabularInline):
+class PlaceImageInline(
+    SortableInlineAdminMixin,
+    admin.TabularInline
+):
     model = PlaceImage
     fields = ('image', 'get_preview_html')
     readonly_fields = ('get_preview_html',)
@@ -25,7 +27,4 @@ class PlaceImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'place', 'position', 'get_preview_html')
     autocomplete_fields = ['place']
 
-
     readonly_fields = ('get_preview_html',)
-
-

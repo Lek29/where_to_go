@@ -6,9 +6,9 @@ from places.models import Place
 
 
 def show_index_page(request):
-    places =Place.objects.all()
+    places = Place.objects.all()
 
-    features =[]
+    features = []
     for place in places:
         details_url = reverse('places:place_detail_api', args=[place.id])
 
