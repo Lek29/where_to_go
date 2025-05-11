@@ -35,22 +35,25 @@ class Command(BaseCommand):
             print(f"Ошибка: отсутствует обязательный ключ {e} в JSON по адресу {json_url}")
             return
 
-        place_object, created = Place.objects.get_or_create(
-            title=place_title_from_json,
-            longitude=longitude_from_json,
-            latitude=latitude_from_json,
-            defaults={
-                'short_description': raw_place.get('description_short', ''),
-                'long_description': raw_place.get('description_long', ''),
-            }
-        )
+        try:
+            place_object, created = Place.objects.get_or_create(
+                title=place_title_from_json,
+                longitude=longitude_from_json,
+                latitude=latitude_from_json,
+                defaults={
+                    'short_description': raw_place.get('description_short', ''),
+                    'long_description': raw_place.get('description_long', ''),
+                }
+            )
 
-        if created:
-            print(f"Место '{place_object.title}' создано.")
-        else:
-            print(f"Место '{place_object.title}' найдено, добавляем/обновляем картинки.")
+            if created:
+                print(f"Место '{place_object.title}' создано.")
+            else:
+                print(f"Место '{place_object.title}' найдено, добавляем/обновляем картинки.")
 
-            place_object.images.all().delete()
+                place_object.images.all().delete()
+        except Place.MultipleObjectsReturned:
+            print('Найдены не уникальные поля')
 
         image_urls = raw_place.get('imgs', [])
         print(f"Найдено картинок: {len(image_urls)}")

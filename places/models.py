@@ -18,7 +18,8 @@ class Place(models.Model):
         blank=True
     )
     longitude = models.FloatField(
-        'Долгота'
+        'Долгота',
+        unique=True
     )
     latitude = models.FloatField(
         'Широта'
