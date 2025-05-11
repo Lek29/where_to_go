@@ -54,6 +54,7 @@ class Command(BaseCommand):
                 place_object.images.all().delete()
         except Place.MultipleObjectsReturned:
             print('Найдены не уникальные поля')
+            return
 
         image_urls = raw_place.get('imgs', [])
         print(f"Найдено картинок: {len(image_urls)}")

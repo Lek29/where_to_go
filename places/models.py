@@ -19,7 +19,6 @@ class Place(models.Model):
     )
     longitude = models.FloatField(
         'Долгота',
-        unique=True
     )
     latitude = models.FloatField(
         'Широта'
@@ -29,6 +28,7 @@ class Place(models.Model):
         ordering = ['title']
         verbose_name = 'Интересное место'
         verbose_name_plural = 'Интересные места'
+        unique_together = [['title', 'longitude', 'latitude']]
 
     def __str__(self):
         return self.title
