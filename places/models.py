@@ -56,11 +56,12 @@ class PlaceImage(models.Model):
         verbose_name = 'Изображение места'
         verbose_name_plural = 'Изображения места'
 
+    @property
     def __str__(self):
         try:
             return f'{self.position} {self.place.title}'
         except (Place.DoesNotExist, AttributeError):
-            return f"{self.position} (Место не указано или еще не сохранено)"
+            return f'{self.position} (Место не указано или еще не сохранено)'
 
     def get_preview_html(self):
         if self.image and hasattr(self.image, 'url'):
@@ -68,6 +69,6 @@ class PlaceImage(models.Model):
                 '<img src="{url}" style="max-height: 200px; max-width: 200px;" />',
                 url=self.image.url
             )
-        return "Нет изображения или объект не сохранен"
+        return 'Нет изображения или объект не сохранен'
 
     get_preview_html.short_description = 'Предпросмотр'

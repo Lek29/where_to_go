@@ -17,14 +17,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         json_url = options['json_url']
-        print(f"Загружаем: {json_url}")
+        print(f'Загружаем: {json_url}')
 
         try:
             response = requests.get(json_url)
             response.raise_for_status()
             raw_place = response.json()
         except Exception as e:
-            print(f"Ошибка при загрузке JSON: {e}")
+            print(f'Ошибка при загрузке JSON: {e}')
             return
         try:
             place_title_from_json = raw_place['title']
@@ -32,7 +32,7 @@ class Command(BaseCommand):
             longitude_from_json = coordinates['lng']
             latitude_from_json = coordinates['lat']
         except KeyError as e:
-            print(f"Ошибка: отсутствует обязательный ключ {e} в JSON по адресу {json_url}")
+            print(f'Ошибка: отсутствует обязательный ключ {e} в JSON по адресу {json_url}')
             return
 
         try:
@@ -57,11 +57,11 @@ class Command(BaseCommand):
             return
 
         image_urls = raw_place.get('imgs', [])
-        print(f"Найдено картинок: {len(image_urls)}")
+        print(f'Найдено картинок: {len(image_urls)}')
 
         for index, img_url in enumerate(image_urls):
             try:
-                print(f"  Загрузка картинки: {img_url}")
+                print(f'Загрузка картинки: {img_url}')
                 img_response = requests.get(img_url)
                 img_response.raise_for_status()
 
