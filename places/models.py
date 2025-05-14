@@ -56,7 +56,6 @@ class PlaceImage(models.Model):
         verbose_name = 'Изображение места'
         verbose_name_plural = 'Изображения места'
 
-    @property
     def __str__(self):
         try:
             return f'{self.position} {self.place.title}'
